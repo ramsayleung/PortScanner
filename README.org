@@ -1,0 +1,61 @@
+* Description
+  this is a simple port scanner written by python with multiprocess
+** Project Structure
+   #+BEGIN_SRC 
+ ├── argparse_parent_base.py //the parent parser to parse command-line argument 
+ ├── host_file //example host file which you can save the host you wanna scan
+ ├── misc.py //a little bit useful function
+ ├── printer.py //handle the result,save to file,or print to console
+ ├── syn_scan.py //a multiprocess scanner use syn scan (half-open)
+ └── tcp_scan.py //a multiprocess scanner use tcp scan
+
+   #+END_SRC
+** Tcp scan
+   tcp scan is try to connect to the host with socket,if it makes it,the port is 
+   open,vice versa.It is simple
+** Syn scan
+   The scanner sends the first handshake in the three-way handshake using the SYN
+   flag and port to connect to the host in a TCP packet.If the host response with
+   SYN-ACK,the port is open,or the host response with RST,the port is closed on the 
+   server
+** Usage
+   First you should install [[https://github.com/phaethon/scapy][scapy]] with python3
+   #+BEGIN_SRC shell
+     python3 tcp_scan.py your_target_ip [optional argument]
+   #+END_SRC 
+   #+BEGIN_SRC shell
+     python3 syn_scan.py your_target_ip [optional argument]
+   #+END_SRC
+   
+   for more information,you can 
+   #+BEGIN_SRC shell
+     python3 syn_scan.py -h
+   #+END_SRC
+   you will get:
+   #+BEGIN_SRC 
+  _ __   ___  _ __| |_ ___  ___ __ _ _ __  _ __   ___ _ __ 
+ | '_ \ / _ \| '__| __/ __|/ __/ _` | '_ \| '_ \ / _ \ '__|
+ | |_) | (_) | |  | |_\__ \ (_| (_| | | | | | | |  __/ |   
+ | .__/ \___/|_|   \__|___/\___\__,_|_| |_|_| |_|\___|_|   
+ |_|                                                       
+
+"A simple port scanner use syn scan",Check status of given port
+Author:Samray <samrayleung@gmail.com>
+More Info:python3 syn_scan.py -h
+
+usage: syn_scan.py [-h] [-p [PORTS [PORTS ...]]] [-t TIMEOUT] [-o OUTPUT_FILE]
+                   [-f HOST_FILE] [-n NUMBER_OF_PROCESS]
+                   [host [host ...]]
+
+positional arguments:
+  host
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -p [PORTS [PORTS ...]]
+                        Store port which is ready to scan
+  -t TIMEOUT            store the timeout of port scan
+  -o OUTPUT_FILE        save the resule to file
+  -f HOST_FILE          read the host list from file
+  -n NUMBER_OF_PROCESS  the number of processes you want to send package
+   #+END_SRC
